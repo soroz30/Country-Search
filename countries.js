@@ -3,31 +3,31 @@ $(function() {
     var countriesList = $('#countries');
 
     function createTableHead(item) {
-    	return $('<thead>').append('<tr><th colspan="2">Background Information:</th></tr>');
+        return $('<thead>').append('<tr><th colspan="2">Background Information:</th></tr>');
     }
 
     function renderLanguages(item) {
-    	var languages = item.languages.map(function(lang){
+        var languages = item.languages.map(function(lang){
                             return lang.name;
-    	                }).join(', ');
-    	return $('<tr>').append($('<th>').text('Languages'))
-    	                .append($('<td>').text(languages));
+                        }).join(', ');
+        return $('<tr>').append($('<th>').text('Languages'))
+                        .append($('<td>').text(languages));
     }
 
     function renderCurrencies(item) {
-    	var currency = item.currencies[0].name + ' (' + item.currencies[0].symbol + ')';
-    	return $('<tr>').append($('<th>').text('Currencies'))
-    	                .append($('<td>').text(currency).addClass('currency'));
+        var currency = item.currencies[0].name + ' (' + item.currencies[0].symbol + ')';
+        return $('<tr>').append($('<th>').text('Currencies'))
+                        .append($('<td>').text(currency).addClass('currency'));
     }
 
     function renderInformations(item) {
         var $rows = [];
         for (var key in item) {
-        	if (['capital', 'region', 'population'].indexOf(key) !== -1) {
-        		if (key === 'population') {
-        			item[key] = ((item[key] / 1000000).toFixed(2)) + ' mln.';
-        		}
-        		var $row = $('<tr>').append($('<th>').text(key))
+            if (['capital', 'region', 'population'].indexOf(key) !== -1) {
+                if (key === 'population') {
+                    item[key] = ((item[key] / 1000000).toFixed(2)) + ' mln.';
+                }
+                var $row = $('<tr>').append($('<th>').text(key))
                                     .append($('<td>').text(item[key]));
                 $rows.push($row);
             }
@@ -36,22 +36,22 @@ $(function() {
     }
 
     function createTableBody(item) {
-    	var $tbody = $('<tbody>')
-    	             .append(renderLanguages(item))
-    	             .append(renderCurrencies(item))
-    	             .append(renderInformations(item));
-    	return $tbody;
+        var $tbody = $('<tbody>')
+                     .append(renderLanguages(item))
+                     .append(renderCurrencies(item))
+                     .append(renderInformations(item));
+        return $tbody;
     }
 
     function createTableFooter() {
-    	return $('<tfoot>').append('<tr><td colspan=2></td></tr>');
+        return $('<tfoot>').append('<tr><td colspan=2></td></tr>');
     }
 
     function createTable(item) {
-    	var $thead = createTableHead(item);
-    	var $tbody = createTableBody(item);
-    	var $tfoot = createTableFooter();
-    	return $('<table>').append($thead, $tbody, $tfoot);
+        var $thead = createTableHead(item);
+        var $tbody = createTableBody(item);
+        var $tfoot = createTableFooter();
+        return $('<table>').append($thead, $tbody, $tfoot);
     }
 
     function addCountry(item) {
