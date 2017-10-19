@@ -27,7 +27,8 @@ $(function() {
                 if (key === 'population') {
                     item[key] = ((item[key] / 1000000).toFixed(2)) + ' mln.';
                 }
-                var $row = $('<tr>').append($('<th>').text(key))
+                var capitalizeKey = key.charAt(0).toUpperCase() + key.slice(1);
+                var $row = $('<tr>').append($('<th>').text(capitalizeKey))
                                     .append($('<td>').text(item[key]));
                 $rows.push($row);
             }
