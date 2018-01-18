@@ -1,3 +1,6 @@
+// poprawic liste najlepszych matczy kiedy wpisujemy malo literek
+// poprawic w liscie takze to, żeby nie pokazywaly sie kraje, ktore nie powinny sie pojawiać
+
 var URL = 'https://restcountries.eu/rest/v2/name/';
 
 function Search() {
@@ -7,7 +10,8 @@ function Search() {
     function createSearchInput() {
         var $search = $('<div>').addClass('search');
         var $button = $('<button>').addClass('button').text('Search a country');
-        var $input = $('<input>').addClass('country-name');
+        var $inputWrapper = new Autocomplete(URL, searchCountries.bind(self)).$element;
+        var $input = $inputWrapper.find('input');
 
         function searchCountries() {
             var countryName = $input.val();
@@ -23,18 +27,13 @@ function Search() {
         }
 
         $button.on('click', searchCountries);
-        $input.on('keypress', function(e) {
-            if (e.which === 13) {
-                searchCountries();
-            }
-        });
 
         $search.append($button)
-               .append($input);
+               .append($inputWrapper);
 
         return $search;
     }
-}
+};
 
 Search.prototype = {
     showCountriesList: function(resp) {
