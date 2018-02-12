@@ -1,5 +1,4 @@
 function CountriesList(resp) {
-    if (!resp) { return; }
     this.$element = createCountriesList(resp);
 
     function createCountriesList(resp) {

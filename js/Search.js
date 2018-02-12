@@ -12,8 +12,9 @@ function Search() {
 
         function searchCountries() {
             var countryName = $input.val();
-            if (!countryName.length) {
-                return self.showCountriesList();
+            var emptyInputMatch = /^\W*$/;
+            if (countryName.match(new RegExp(emptyInputMatch))) {
+                return self.removeContent();
             }
             $.ajax({
                 url: URL + countryName,
@@ -39,7 +40,6 @@ Search.prototype = {
         var countries = this.filterResponse(resp, countryName);
         var $countriesList = new CountriesList(countries);
         this.removeContent();
-        console.log($countriesList.$element)
         this.$element.next().after($countriesList.$element);
     },
 
