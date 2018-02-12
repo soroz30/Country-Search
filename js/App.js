@@ -3,7 +3,7 @@ $(function() {
 
     $('.main').append($('<h1><a href="index.html">Country search engine</a></h1>'))
               .append($searchInput.$element)
-              .append('<div class="hidden"><h1>Country search engine</h1></div');
+              .append('<div class="hidden-element"><h1>Country search engine</h1></div');
 
     $('body').vegas({
         slides: [
