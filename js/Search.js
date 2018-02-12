@@ -39,6 +39,7 @@ Search.prototype = {
         var countries = this.filterResponse(resp, countryName);
         var $countriesList = new CountriesList(countries);
         this.removeContent();
+        console.log($countriesList.$element)
         this.$element.next().after($countriesList.$element);
     },
 
