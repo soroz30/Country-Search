@@ -18,7 +18,9 @@ function Search() {
             $.ajax({
                 url: URL + countryName,
                 method: 'GET',
-                success: self.showCountriesList.bind(self),
+                success: function(resp) {
+                    self.showCountriesList(resp, countryName);
+                },
                 error: self.handleError.bind(self)
             });
         }
@@ -33,8 +35,9 @@ function Search() {
 }
 
 Search.prototype = {
-    showCountriesList: function(resp) {
-        var $countriesList = new CountriesList(resp);
+    showCountriesList: function(resp, countryName) {
+        var countries = this.filterResponse(resp, countryName);
+        var $countriesList = new CountriesList(countries);
         this.removeContent();
         this.$element.next().after($countriesList.$element);
     },
@@ -46,5 +49,12 @@ Search.prototype = {
 
     removeContent: function() {
         this.$element.nextAll('ul, .info').remove();
+    },
+
+    filterResponse: function(resp, countryName) {
+        var firstLettersInputMatch = '^' + countryName;
+        return resp.filter(function(country) {
+            return country.name.toLowerCase().match(new RegExp(firstLettersInputMatch));
+        });
     }
 };
