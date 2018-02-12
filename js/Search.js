@@ -53,7 +53,7 @@ Search.prototype = {
     },
 
     filterResponse: function(resp, countryName) {
-        var firstLettersInputMatch = '^' + countryName;
+        var firstLettersInputMatch = '^' + countryName.toLowerCase();
         return resp.filter(function(country) {
             return country.name.toLowerCase().match(new RegExp(firstLettersInputMatch));
         });
