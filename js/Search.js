@@ -1,6 +1,3 @@
-// poprawic liste najlepszych matczy kiedy wpisujemy malo literek
-// poprawic w liscie takze to, żeby nie pokazywaly sie kraje, ktore nie powinny sie pojawiać
-
 var URL = 'https://restcountries.eu/rest/v2/name/';
 
 function Search() {
@@ -9,14 +6,14 @@ function Search() {
 
     function createSearchInput() {
         var $search = $('<div>').addClass('search');
-        var $button = $('<button>').addClass('button').text('Search a country');
+        var $button = $('<button>').addClass('button').text('Search');
         var $inputWrapper = new Autocomplete(URL, searchCountries.bind(self)).$element;
         var $input = $inputWrapper.find('input');
 
         function searchCountries() {
             var countryName = $input.val();
             if (!countryName.length) {
-                countryName = 'Poland';
+                return self.showCountriesList();
             }
             $.ajax({
                 url: URL + countryName,
@@ -28,26 +25,26 @@ function Search() {
 
         $button.on('click', searchCountries);
 
-        $search.append($button)
-               .append($inputWrapper);
+        $search.append($inputWrapper)
+               .append($button);
 
         return $search;
     }
-};
+}
 
 Search.prototype = {
     showCountriesList: function(resp) {
         var $countriesList = new CountriesList(resp);
         this.removeContent();
-        this.$element.after($countriesList.$element);
+        this.$element.next().after($countriesList.$element);
     },
 
     handleError: function() {
         this.removeContent();
-        this.$element.after($('<p>').text('Data is not available'));
+        this.$element.next().after($('<p class="info">').text('Data is not available!'));
     },
 
     removeContent: function() {
-        this.$element.nextAll().remove();
+        this.$element.nextAll('ul, .info').remove();
     }
 };

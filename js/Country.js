@@ -40,7 +40,9 @@ Country.prototype = {
     },
 
     renderCurrencies: function(country) {
-        var currency = country.currencies[0].name + ' (' + country.currencies[0].symbol + ')';
+        var currencySymbol = country.currencies[0].symbol;
+        currencySymbol = currencySymbol ? ' (' + currencySymbol + ')' : '';
+        var currency = country.currencies[0].name + currencySymbol;
         return $('<tr>').append($('<th>').text('Currencies'))
                         .append($('<td>').text(currency).addClass('currency'));
     },

@@ -4,7 +4,6 @@ function Autocomplete(url, searchCountries) {
     this.searchCountries = searchCountries;
 
 	this.$listUI = null;
-	this.$overlay = null;
 
     this.$element = createAutocomplete();
     this.$reset = this.reset.bind(this);
@@ -29,7 +28,7 @@ Autocomplete.prototype.bindEvents = function() {
 	this.$input.keydown(this.handleKeydown.bind(this));
 	this.$listUI.mousedown(this.handleMousedown.bind(this));
     $('body').click(this.clearListUI.bind(this));
-}
+};
 
 Autocomplete.prototype.wrapInput = function() {
 	this.$input.insertBefore(this.$wrapper);
@@ -39,19 +38,10 @@ Autocomplete.prototype.wrapInput = function() {
 Autocomplete.prototype.createUI = function() {
 	this.$listUI = $('<ul>').addClass('autocomplete-ui');
 	this.$wrapper.append(this.$listUI);
-
-	this.$overlay = $('<div>').addClass('autocomplete-overlay');
-
-	this.$wrapper.append(this.$overlay);
 };
 
 Autocomplete.prototype.draw = function() {
 	this.$listUI.empty();
-
-	if (!this.visible) {
-		this.$overlay.text('');
-		return;
-	}
 
     this.matches.forEach(function(match, index) {
         var $li = $('<li>').addClass('autocomplete-ui-choice');
@@ -66,22 +56,7 @@ Autocomplete.prototype.draw = function() {
 	if (this.matches) {
         var selectedIndex = this.selectedIndex || 0;
 		var selected = this.matches[selectedIndex];
-		this.$overlay.text(this.generateOverlayContent(this.$input.val(), selected));
-	} else {
-		this.$overlay.text('');
 	}
-};
-
-Autocomplete.prototype.generateOverlayContent = function(value, match) {
-    console.log(value);
-    console.log(match);
-	if (!match) {
-		return '';
-	}
-
-	var end = match.substr(value.length);
-    console.log(value + end)
-	return value + end;
 };
 
 Autocomplete.prototype.fetchMaches = function(query, callback) {
@@ -126,7 +101,6 @@ Autocomplete.prototype.handleKeydown = function(event) {
 			this.reset();
 			break;
         default:
-            this.$overlay.text('');
             this.valueChanged();
             break;
 	}
@@ -152,20 +126,20 @@ Autocomplete.prototype.reset = function(event) {
 };
 
 Autocomplete.prototype.handleInput = function(e) {
-	this.$overlay.text('');
 	this.valueChanged();
 };
 
 Autocomplete.prototype.valueChanged = function() {
 	var value = this.$input.val();
 	this.previousValue = value;
-	if (value.length > 0) {
+	if (value.length > 1) {
 		this.fetchMaches(value, function(matches) {
-            (matches)
-			this.visible = true;
-			this.matches = this.sortMatches(matches);
-			this.selectedIndex = null;
-			this.draw();
+            if (matches) {
+			    this.visible = true;
+			    this.matches = this.sortMatches(matches);
+		      	this.selectedIndex = null;
+	   		    this.draw();
+            }
 		}.bind(this));
 	} else {
 		this.reset();
@@ -200,5 +174,5 @@ Autocomplete.prototype.debounce = function(func, delay) {
         timeout = setTimeout(function() {
             func.apply(null, args);
         }, delay);
-    }
+    };
 };
