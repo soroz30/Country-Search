@@ -38,6 +38,7 @@ function Search() {
 Search.prototype = {
     showCountriesList: function(resp, countryName) {
         var countries = this.filterResponse(resp, countryName);
+        if (countries.length === 0) { return this.handleError(); }
         var $countriesList = new CountriesList(countries);
         this.removeContent();
         this.$element.next().after($countriesList.$element);
@@ -45,7 +46,9 @@ Search.prototype = {
 
     handleError: function() {
         this.removeContent();
-        this.$element.next().after($('<p class="info">').text('Data is not available!'));
+        this.$element.next().after($('<p class="info">').text('Data is not available!').hide());
+        $('.info').fadeIn(400).delay(1500).fadeOut(400);
+
     },
 
     removeContent: function() {

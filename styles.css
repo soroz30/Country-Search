@@ -35,17 +35,16 @@ h1 {
 }
 
 .info {
-	background: rgba(0, 0, 0, 0.3);
 	position: absolute;
 	text-align: center;
-	margin: 63px auto 0;
+	margin: 42px auto 0;
 	left: 0;
 	right: 0;
 	color: #fff;
 	text-transform: uppercase;
 }
 
-.hidden-element {
+.hidden {
 	flex: 1 0 30%;
 	visibility: hidden;
 }
@@ -144,11 +143,6 @@ h1 {
 	white-space: nowrap;
 }
 
-.country-info:hover table {
-	background: rgba(0, 0, 0, 1);
-	transition: background 0.5s;
-}
-
 .country-info img, .country-info h3 {
 	display: inline-block;
 	vertical-align: middle;
@@ -169,7 +163,6 @@ h1 {
 	background: rgba(0, 0, 0, 0.8);
 	border-collapse: collapse;
 	margin: 20px 0;
-	transition: background 0.5s;
 	width: 100%;
 }
 
@@ -204,13 +197,13 @@ h1 {
 }
 
 @media screen and (max-width: 1200px) {
-	.hidden-element {
+	.hidden {
 		display: none;
 	}
 
 	.info {
-		margin: 63px 0 0;
-		width: 100%;
+		left: auto;
+		margin: 42px 90px 0 0;
 	}
 
 	.search {
@@ -232,7 +225,7 @@ h1 {
 	}
 
 	.info {
-		margin: 100px auto 0;
+		margin: 80px auto 0;
 		left: 0;
 	}
 
@@ -262,7 +255,7 @@ h1 {
 	}
 
 	.info {
-		margin: 120px auto 0;
+		margin: 100px auto 0;
 	}
 
 	h1 {
